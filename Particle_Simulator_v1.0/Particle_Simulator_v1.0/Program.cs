@@ -16,6 +16,12 @@ namespace Particle_Simulator_v1._0
             }
         }
     }
+
+    class PhysicsEngineHaha
+    {
+        public int haha = 10;
+    }
+
 #endif
 }
 

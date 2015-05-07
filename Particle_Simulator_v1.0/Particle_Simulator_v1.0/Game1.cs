@@ -48,7 +48,7 @@ namespace Particle_Simulator_v1._0
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            circle = CreateCircle(100);
+            circle = Content.Load<Texture2D>("circle");
             // TODO: use this.Content to load your game content here
         }
 
@@ -87,40 +87,13 @@ namespace Particle_Simulator_v1._0
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(circle, new Vector2(30, 30), Color.Red); 
+            spriteBatch.Draw(circle, new Rectangle(10, 10, 50, 50), Color.CornflowerBlue); 
 
             spriteBatch.End();
 
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
-        }
-
-        public Texture2D CreateCircle(int radius)
-        {
-            int outerRadius = radius*2 + 2; // So circle doesn't go out of bounds
-            Texture2D texture = new Texture2D(GraphicsDevice, outerRadius, outerRadius);
-
-            Color[] data = new Color[outerRadius * outerRadius];
-
-            // Colour the entire texture transparent first.
-            for (int i = 0; i < data.Length; i++)
-                data[i] = Color.TransparentWhite;
-
-            // Work out the minimum step necessary using trigonometry + sine approximation.
-            double angleStep = 1f/radius;
-
-            for (double angle = 0; angle < Math.PI*2; angle += angleStep)
-            {
-                // Use the parametric definition of a circle: http://en.wikipedia.org/wiki/Circle#Cartesian_coordinates
-                int x = (int)Math.Round(radius + radius * Math.Cos(angle));
-                int y = (int)Math.Round(radius + radius * Math.Sin(angle));
-
-                data[y * outerRadius + x + 1] = Color.White;
-            }
-
-            texture.SetData(data);
-            return texture;
         }
     }
 }
