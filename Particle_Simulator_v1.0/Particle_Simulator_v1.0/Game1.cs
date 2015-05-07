@@ -19,11 +19,15 @@ namespace Particle_Simulator_v1._0
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Texture2D circle;
+        ParticleSystem PhysicsController;
+        Texture2D circle;
+        private int[][] particle_info;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -35,6 +39,9 @@ namespace Particle_Simulator_v1._0
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            PhysicsController = new ParticleSystem(10, 5, 5, 5, 100);
+            particle_info = new int[PhysicsController.Particle_number, 4];
+
 
             base.Initialize();
         }
@@ -49,6 +56,7 @@ namespace Particle_Simulator_v1._0
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             circle = Content.Load<Texture2D>("circle");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -73,6 +81,11 @@ namespace Particle_Simulator_v1._0
                 this.Exit();
 
             // TODO: Add your update logic here
+            if (gameTime.IsRunningSlowly == False)
+            {
+                PhysicsController.Update(gameTime.ElapsedGameTime);
+                PhysicsController.PrintInfoForAll(ref particle_info);
+            }
 
             base.Update(gameTime);
         }
@@ -87,7 +100,11 @@ namespace Particle_Simulator_v1._0
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(circle, new Rectangle(10, 10, 50, 50), Color.CornflowerBlue); 
+            for (int i = 0; i < PhysicsController.Particle_number; i++)
+            {
+                spriteBatch.Draw(circle, new Rectangle(particle_info[i][1], particle_info[i][2], 
+                    particle_info[i][0], particle_info[i][0]), Color.White);    
+            }
 
             spriteBatch.End();
 
