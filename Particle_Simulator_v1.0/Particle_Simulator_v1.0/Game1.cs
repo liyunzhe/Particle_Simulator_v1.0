@@ -19,11 +19,15 @@ namespace Particle_Simulator_v1._0
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Texture2D circle;
+        ParticleSystem PhysicsController;
+        Texture2D circle;
+        private int[][] particle_info;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -35,6 +39,9 @@ namespace Particle_Simulator_v1._0
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            PhysicsController = new ParticleSystem(10, 5, 5, 5, 100);
+            particle_info = new int[PhysicsController.Particle_number, 4];
+
 
             base.Initialize();
         }
@@ -48,7 +55,7 @@ namespace Particle_Simulator_v1._0
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            circle = CreateCircle(100);
+            circle = Content.LoadContent<Texture2D>("circle");
             // TODO: use this.Content to load your game content here
         }
 
@@ -73,6 +80,11 @@ namespace Particle_Simulator_v1._0
                 this.Exit();
 
             // TODO: Add your update logic here
+            if (gameTime.IsRunningSlowly == False)
+            {
+                PhysicsController.Update(gameTime.ElapsedGameTime);
+                PhysicsController.PrintInfoForAll(ref particle_info);
+            }
 
             base.Update(gameTime);
         }
@@ -87,40 +99,19 @@ namespace Particle_Simulator_v1._0
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(circle, new Vector2(30, 30), Color.Red); 
+            for (int i = 0; i < PhysicsController.Particle_number; i++)
+            {
+                spriteBatch.Draw(circle, new Rectangle(particle_info[i][1], particle_info[i][2], 
+                    particle_info[i][0], particle_info[i][0]), Color.White);    
+            }
+
+            
 
             spriteBatch.End();
 
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
-        }
-
-        public Texture2D CreateCircle(int radius)
-        {
-            int outerRadius = radius*2 + 2; // So circle doesn't go out of bounds
-            Texture2D texture = new Texture2D(GraphicsDevice, outerRadius, outerRadius);
-
-            Color[] data = new Color[outerRadius * outerRadius];
-
-            // Colour the entire texture transparent first.
-            for (int i = 0; i < data.Length; i++)
-                data[i] = Color.TransparentWhite;
-
-            // Work out the minimum step necessary using trigonometry + sine approximation.
-            double angleStep = 1f/radius;
-
-            for (double angle = 0; angle < Math.PI*2; angle += angleStep)
-            {
-                // Use the parametric definition of a circle: http://en.wikipedia.org/wiki/Circle#Cartesian_coordinates
-                int x = (int)Math.Round(radius + radius * Math.Cos(angle));
-                int y = (int)Math.Round(radius + radius * Math.Sin(angle));
-
-                data[y * outerRadius + x + 1] = Color.White;
-            }
-
-            texture.SetData(data);
-            return texture;
         }
     }
 }
