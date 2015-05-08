@@ -59,7 +59,8 @@ namespace Particle_Simulator_v1._0
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            circle = Content.LoadContent<Texture2D>("circle");
+            circle = Content.Load<Texture2D>("circle");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -108,8 +109,6 @@ namespace Particle_Simulator_v1._0
                 spriteBatch.Draw(circle, new Rectangle(particle_info[i][1] + Display_Size / 2, 
                     particle_info[i][2] + Display_Size / 2, particle_info[i][0], particle_info[i][0]), Color.White);    
             }
-
-            
 
             spriteBatch.End();
 
