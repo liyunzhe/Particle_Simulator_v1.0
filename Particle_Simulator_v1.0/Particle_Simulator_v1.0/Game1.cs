@@ -16,9 +16,10 @@ namespace Particle_Simulator_v1._0
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        public int simulation_speed = 50;
+        public int scaling = 2;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Texture2D circle;
         ParticleSystem PhysicsController;
         Texture2D circle_to_draw;
         private int[][] particle_info;
@@ -29,10 +30,12 @@ namespace Particle_Simulator_v1._0
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+
+
             PhysicsController = new ParticleSystem(10, 5, 5, 5, 100);
             Display_Size = (int)PhysicsController.FIELD_SIZE * 2;
-            graphics.PreferredBackBufferWidth = Display_Size;
-            graphics.PreferredBackBufferHeight = Display_Size;
+            graphics.PreferredBackBufferWidth = Display_Size * scaling;
+            graphics.PreferredBackBufferHeight = Display_Size * scaling;
         }
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace Particle_Simulator_v1._0
             // TODO: Add your update logic here
             if (gameTime.IsRunningSlowly == false)
             {
-                PhysicsController.Update(gameTime.ElapsedGameTime.TotalSeconds * 10);
+                PhysicsController.Update(gameTime.ElapsedGameTime.TotalSeconds * simulation_speed);
                 PhysicsController.PrintInfoForAll(ref particle_info);
             }
 
@@ -110,8 +113,11 @@ namespace Particle_Simulator_v1._0
 
             for (int i = 0; i < PhysicsController.Particle_number; i++)
             {
-                spriteBatch.Draw(circle_to_draw, new Rectangle(particle_info[i][1] + Display_Size / 2,
-                    particle_info[i][2] + Display_Size / 2, particle_info[i][0], particle_info[i][0]), Color.White);
+                Rectangle rec = new Rectangle((particle_info[i][1] + Display_Size / 2) * scaling,
+                    (particle_info[i][2] + Display_Size / 2) * scaling,
+                    particle_info[i][0] * scaling, particle_info[i][0] * scaling);
+                
+                spriteBatch.Draw(circle_to_draw, rec, Color.White);
             }
 
             spriteBatch.End();
