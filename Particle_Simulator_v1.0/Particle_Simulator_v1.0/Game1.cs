@@ -16,7 +16,7 @@ namespace Particle_Simulator_v1._0
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        public int simulation_speed = 50;
+        public int simulation_speed = 10;
         public int scaling = 2;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

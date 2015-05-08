@@ -23,7 +23,7 @@ namespace Particle_Simulator_v1._0
 
         public double Potential(double x, double y)
         {
-            return 5;
+            return 0.5 * y;
         }
 
         //compute potential gradient
@@ -77,7 +77,7 @@ namespace Particle_Simulator_v1._0
         public int Particle_number;
         public double MAX_V, MAX_MASS, MAX_RADIUS, FIELD_SIZE;
         private Particle[] Particle_array;
-        private static int fps = 100;
+        private static int fps = 1000; //10000 is the max for 10 particles
         Field potential_field = new Field();
 
         public ParticleSystem(int i, double V, double M, double R, double SIZE)
