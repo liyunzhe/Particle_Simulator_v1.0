@@ -23,7 +23,7 @@ namespace Particle_Simulator_v1._0
 
         public double Potential(double x, double y)
         {
-            return Math.Cosh(x * x + y * y);
+            return 5;
         }
 
         //compute potential gradient
@@ -134,10 +134,11 @@ namespace Particle_Simulator_v1._0
             int i = 0;
             foreach (Particle particle in Particle_array)
             {
-                array[i][0] = Math.Round(Mathparticle.mass, MidpointRounding.AwayFromZero));
-                array[i][1] = Math.Round(particle.position_x, MidpointRounding.AwayFromZero));
-                array[i][2] = Math.Round(particle.position_y, MidpointRounding.AwayFromZero));
-                array[i][3] = Math.Round(particle.radius, MidpointRounding.AwayFromZero));
+                array[i] = new int[4];
+                array[i][0] = (int)particle.mass;
+                array[i][1] = (int)particle.position_x;
+                array[i][2] = (int)particle.position_y;
+                array[i][3] = (int)particle.radius;
                 i++;
             }
         }
