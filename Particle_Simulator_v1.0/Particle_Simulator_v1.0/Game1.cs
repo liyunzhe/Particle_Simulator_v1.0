@@ -22,6 +22,7 @@ namespace Particle_Simulator_v1._0
         ParticleSystem PhysicsController;
         Texture2D circle;
         private int[][] particle_info;
+        private int Display_Size;
 
         public Game1()
         {
@@ -41,7 +42,10 @@ namespace Particle_Simulator_v1._0
             // TODO: Add your initialization logic here
             PhysicsController = new ParticleSystem(10, 5, 5, 5, 100);
             particle_info = new int[PhysicsController.Particle_number, 4];
+            Display_Size = PhysicsController.FIELD_SIZE * 2;
 
+            graphics.PreferredBackBufferWidth = Display_Size;
+            graphics.PreferredBackBufferHeight = Display_Size;
 
             base.Initialize();
         }
@@ -101,8 +105,8 @@ namespace Particle_Simulator_v1._0
 
             for (int i = 0; i < PhysicsController.Particle_number; i++)
             {
-                spriteBatch.Draw(circle, new Rectangle(particle_info[i][1], particle_info[i][2], 
-                    particle_info[i][0], particle_info[i][0]), Color.White);    
+                spriteBatch.Draw(circle, new Rectangle(particle_info[i][1] + Display_Size / 2, 
+                    particle_info[i][2] + Display_Size / 2, particle_info[i][0], particle_info[i][0]), Color.White);    
             }
 
             
