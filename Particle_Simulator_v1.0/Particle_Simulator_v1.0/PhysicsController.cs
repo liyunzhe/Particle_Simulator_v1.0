@@ -207,11 +207,11 @@ namespace Particle_Simulator_v1._0
                     particle.velocity_y *= -1;
                     if (particle.position_y < 0)
                     {
-                        particle.position_y = Math.Abs(particle.position_y - FIELD_SIZE) - FIELD_SIZE;
+                        particle.position_y = -FIELD_SIZE * 2 - particle.position_y;
                     }
                     else
                     {
-                        particle.position_y = FIELD_SIZE - Math.Abs(particle.position_y - FIELD_SIZE);   
+                        particle.position_y = FIELD_SIZE * 2 - particle.position_y;   
                     }
                 }
                 if (Math.Abs(particle.position_x) > FIELD_SIZE)
@@ -219,11 +219,11 @@ namespace Particle_Simulator_v1._0
                     particle.velocity_x *= -1;
                     if (particle.position_x < 0)
                     {
-                        particle.position_x = Math.Abs(particle.position_x - FIELD_SIZE) - FIELD_SIZE;
+                        particle.position_x = -FIELD_SIZE * 2 - particle.position_x;
                     }
                     else
                     {
-                        particle.position_x = FIELD_SIZE - Math.Abs(particle.position_x - FIELD_SIZE);   
+                        particle.position_x = FIELD_SIZE  * 2 - particle.position_x;   
                     }
                 }
             }
